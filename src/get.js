@@ -1,6 +1,9 @@
 // Import Third-party Dependencies
 import semver from "semver";
 
+// Import Internal Dependencies
+import { is } from "./is.js";
+
 // CONSTANTS
 const kNodeCoreModules = [
   "assert",
@@ -113,7 +116,26 @@ function builtins(options = {}) {
   return builtins;
 }
 
+/**
+ * @description Return the module (dependency) kind.
+ * @param {!string} moduleName
+ * @returns {"subpath" | "filesystem" | "builtins" | "thirdparty"}
+ */
+function kind(moduleName) {
+  if (is.subpath(moduleName)) {
+    return "subpath";
+  }
+  if (is.filesystem(moduleName)) {
+    return "filesystem";
+  }
+  if (is.builtins(moduleName)) {
+    return "builtins";
+  }
+
+  return "thirdparty";
+}
 
 export const get = Object.freeze({
-  builtins
+  builtins,
+  kind
 });

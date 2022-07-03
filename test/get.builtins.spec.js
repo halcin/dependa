@@ -44,3 +44,21 @@ Then get.builtins() must return all core dependencies except experimental one`, 
   tape.strictEqual(includeExperimental, true);
   tape.end();
 });
+
+test("Node.js version under <6.0.0 must include freelist", (tape) => {
+  const builtinsOld = dependa.get.builtins({ version: "5.0.0" });
+  const builtinsNew = dependa.get.builtins({ version: "7.0.0" });
+  tape.true(builtinsOld.has("freelist"));
+  tape.false(builtinsNew.has("freelist"));
+
+  tape.end();
+});
+
+test("Node.js version under 1.0.0 must not include v8", (tape) => {
+  const builtinsOld = dependa.get.builtins({ version: "0.10.0" });
+  const builtinsNew = dependa.get.builtins({ version: "2.0.0" });
+  tape.false(builtinsOld.has("v8"));
+  tape.true(builtinsNew.has("v8"));
+
+  tape.end();
+});

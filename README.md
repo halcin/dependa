@@ -1,10 +1,10 @@
 # Dependa
-Identify and categorize Node.js dependencies (builtins, third parties..). The module and the code has been inspired by [builtins](https://github.com/juliangruber/builtins) and [builtin-modules](https://github.com/sindresorhus/builtin-modules).
+Identify and categorize Node.js dependencies (builtins, alias, third parties..). The module and the code has been inspired by [builtins](https://github.com/juliangruber/builtins) and [builtin-modules](https://github.com/sindresorhus/builtin-modules).
 
 ## Features
-- Several ways to use the API (**get** and **is**).
+- Several ways to use the API (**get** and **is**) to allow any kind of custom code.
 - First class support of Node.js protocol `node:`.
-- Wider API not limited/restricted to Node.js core.
+- Wider API not limited or restricted to Node.js core modules.
 
 ## Getting Started
 
@@ -33,8 +33,20 @@ console.log(builtins);
 ### is.builtins(moduleName: string): boolean
 Return true if the given moduleName is a Node.js core dependency.
 
+### is.subpath(moduleName: string): boolean
+Return true if the given moduleName is a Subpath import (starting with `#`).
+
+### is.filesystem(moduleName: string): boolean
+Return true if the given moduleName is a filesystem dependency (starting with `/`, `./` or `../`).
+
+### is.thirdparty(moduleName: string): boolean
+Return true if the given moduleName is a third-party dependency (which mean the module is not a subpath, builtins or filesystem).
+
 ### get.builtins(options): Set< string >
 Return an ES6 Set of all Node.js builtins (core dependency).
+
+### get.kind(moduleName: string): "subpath" | "filesystem" | "builtins" | "thirdparty"
+Return the kind of the given module name.
 
 ## Contributors ✨
 
